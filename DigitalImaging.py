@@ -98,22 +98,24 @@ class DigitalImaging:
             classifiers = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
 
         img = cv2.imread(img_path)  # read the img
-        img_copy = img.copy()  # make a copy of the image
 
-        img_faces = classifiers.detectMultiScale(img_copy)  # detect the object
+        img_in_gray = \
+            cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # make a copy of the image in gray scale (for better performance)
+
+        img_faces = classifiers.detectMultiScale(img_in_gray)  # detect the object
 
         # paint the rectangle around the objects that detected
         for (row, column, width, height) in img_faces:
-            cv2.rectangle(img_copy,  # image
+            cv2.rectangle(img,  # image
                           (row, column),  # upper left corner of each face
                           (row + width, column + height),  # lower right corner of each face
                           (0, 255, 0),  # paint the rectangle in green (BGR)
                           2)
 
-        if len(img_faces) == 0: # if we don't find anything
+        if len(img_faces) == 0:  # if we don't find anything
             print(f"{detect_location} not detected")
 
-        return img_copy
+        return img
 
     def detect_obj_adv(self, detect_eyes, detect_faces):
         pass
