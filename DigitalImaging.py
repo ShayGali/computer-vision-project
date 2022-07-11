@@ -15,19 +15,28 @@ class DigitalImaging:
         pass
 
     def reduce_to(self, path: str, RGB_char: str) -> Image:
+        """
+        get path for an image, and selected RGB color, and return new image only in the selected channel
+        :param path: path to image
+        :param RGB_char: can be - R, G, B
+        :return: new Image object
+        """
         valid_chars = ('R', 'G', 'B')
         if RGB_char not in valid_chars:
             raise ValueError(f"RGB_char need to be ('R', 'G', 'B'), you pass {RGB_char}")
 
         img_arr = np.array(np.array(Image.open(path)))
+
         img_one_color_channel = img_arr.copy()
+
         if RGB_char == 'R':
-            img_one_color_channel[:, :, (1, 2)] = 0
+            img_one_color_channel[:, :, (1, 2)] = 0 # will take all the pixels and in channels 1 and 2 (green and blue), put the value 0
         elif RGB_char == 'G':
-            img_one_color_channel[:, :, (0, 2)] = 0
+            img_one_color_channel[:, :, (0, 2)] = 0 # will take all the pixels and in channels 0 and 2 (red and blue), put the value 0
         elif RGB_char == 'B':
-            img_one_color_channel[:, :, (0, 1)] = 0
-        return Image.fromarray(img_one_color_channel, 'RGB')
+            img_one_color_channel[:, :, (0, 1)] = 0 # will take all the pixels and in channels 0 and 1 (red and green), put the value 0
+
+        return Image.fromarray(img_one_color_channel, 'RGB') # convert the array to image
 
     def make_collage(self):
         pass
