@@ -14,8 +14,20 @@ class DigitalImaging:
     def color_at(self, img: np.ndarray, row_num: int, col_num: int):
         pass
 
-    def reduce_to(self, path: str, RGB_char: str):
-        pass
+    def reduce_to(self, path: str, RGB_char: str) -> Image:
+        valid_chars = ('R', 'G', 'B')
+        if RGB_char not in valid_chars:
+            raise ValueError(f"RGB_char need to be ('R', 'G', 'B'), you pass {RGB_char}")
+
+        img_arr = np.array(np.array(Image.open(path)))
+        img_one_color_channel = img_arr.copy()
+        if RGB_char == 'R':
+            img_one_color_channel[:, :, (1, 2)] = 0
+        elif RGB_char == 'G':
+            img_one_color_channel[:, :, (0, 2)] = 0
+        elif RGB_char == 'B':
+            img_one_color_channel[:, :, (0, 1)] = 0
+        return Image.fromarray(img_one_color_channel, 'RGB')
 
     def make_collage(self):
         pass
