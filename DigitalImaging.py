@@ -1,0 +1,33 @@
+from dataclasses import dataclass
+import dataclasses as dc
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as pyplot
+
+
+@dataclass
+class DigitalImaging:
+
+    def convert_to_gs(self, img_path: str):
+        pass
+
+    def color_at(self, img: np.ndarray, row_num: int, col_num: int):
+        pass
+
+    def reduce_to(self, path: str, RGB_char: str):
+        pass
+
+    def make_collage(self):
+        pass
+
+    def shapes_dict(self):
+        pass
+
+    def detect_obj(self):
+        pass
+
+    def detect_obj_adv(self, detect_eyes, detect_faces):
+        pass
+
+    def detect_face_in_vid(self, video_path: str):
+        pass
