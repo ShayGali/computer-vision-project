@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 import dataclasses as dc
-from typing import List
-
+from typing import List, Literal
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as pyplot
+import cv2
 
 
 @dataclass
@@ -15,7 +15,7 @@ class DigitalImaging:
     def color_at(self, img: np.ndarray, row_num: int, col_num: int):
         pass
 
-    def reduce_to(self, path: str, RGB_char: str) -> Image:
+    def reduce_to(self, path: str, RGB_char: str) -> Image.Image:
         """
         get path for an image, and selected RGB color, and return new image only in the selected channel
         :param path: path to image
@@ -69,11 +69,68 @@ class DigitalImaging:
     def shapes_dict(self):
         pass
 
-    def detect_obj(self):
-        pass
+    def detect_obj(self, img_path: str, detect_location: Literal["eyes", "face"]) -> np.ndarray:
+        """
+        detect object in image.
+
+        :param img_path: path to the image
+        :param detect_location: Which part to detect. can be "face" or "eyes"
+        :return: the image with green rectangle around the detected objects
+        """
+        # the valid detect locations
+        valid_detect_locations = ("face", "eyes",)
+
+        # check the type of the img_path
+        if not isinstance(img_path, str):
+            raise TypeError(f"img_path need to be of type str, ypu pass {type(img_path)}")
+
+        # convert the detect_location to lover case
+        detect_location = detect_location.lower()
+
+        # check if the detect_location is in the valid_detect_locations
+        if detect_location not in valid_detect_locations:
+            raise ValueError(f"detect_location can be ({valid_detect_locations}), you pass {detect_location}")
+
+        # select the classifiers according to the detect_location
+        if detect_location == "face":
+            classifiers = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        elif detect_location == "eyes":
+            classifiers = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
+
+        img = cv2.imread(img_path)  # read the img
+        img_copy = img.copy()  # make a copy of the image
+
+        img_faces = classifiers.detectMultiScale(img_copy)  # detect the object
+
+        # paint the rectangle around the objects that detected
+        for (row, column, width, height) in img_faces:
+            cv2.rectangle(img_copy,  # image
+                          (row, column),  # upper left corner of each face
+                          (row + width, column + height),  # lower right corner of each face
+                          (0, 255, 0),  # paint the rectangle in green (BGR)
+                          2)
+
+        if len(img_faces) == 0: # if we don't find anything
+            print(f"{detect_location} not detected")
+
+        return img_copy
 
     def detect_obj_adv(self, detect_eyes, detect_faces):
         pass
 
     def detect_face_in_vid(self, video_path: str):
         pass
+
+    @staticmethod
+    def show_cv2_img(cv2_img_arr: np.ndarray, window_name='image'):
+        while True:
+            if cv2_img_arr is None:
+                break
+            cv2.imshow(window_name, cv2_img_arr)
+            key_pressed = cv2.waitKey(0)  # define a handler for key press
+            if key_pressed:  # no matter what we press, this will behave as ESC
+                break
+        try:
+            cv2.destroyWindow('image')  # also possible: cv2.destroyAllWindows()
+        except cv2.error:
+            pass
