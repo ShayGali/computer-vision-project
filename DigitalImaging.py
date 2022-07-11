@@ -39,24 +39,32 @@ class DigitalImaging:
 
         return Image.fromarray(img_one_color_channel, 'RGB')  # convert the array to image
 
-    def make_collage(self, images_list: List) -> np.ndarray:
-
+    def make_collage(self, images_list: List[Image.Image]) -> np.ndarray:
+        """
+        get list of images object and merge them to one collage.
+        the collage will be -> 3 red channel images, 3 green channel images, 3 blue channel images and so on
+        :param images_list: list on image object (from PIL.Image package)
+        :return: np.array that represent the collage
+        """
+        # check that all images are type of Image.Image
         if any([not isinstance(img, Image.Image) for img in images_list]):
             raise ValueError("all images need to be of type PIL.Image")
 
+        # convert the images from Image object to np.array
         images_list_as_array = [np.array(img) for img in images_list]  # convert all images to ndarray
 
-        new_images = []
+        new_images = []  # all the new array will be store here
+
         for (index, img) in enumerate(images_list_as_array):
             if (index // 3) % 3 == 0:
-                img[:, :, (1, 2)] = 0
+                img[:, :, (1, 2)] = 0  # covert to red channel
             elif (index // 3) % 3 == 1:
-                img[:, :, (0, 2)] = 0
+                img[:, :, (0, 2)] = 0  # covert to green channel
             else:
-                img[:, :, (0, 1)] = 0
+                img[:, :, (0, 1)] = 0  # covert to blue channel
             new_images.append(img)
 
-        return np.vstack(new_images)
+        return np.vstack(new_images)  # stack the np.arrays to one np.array vertically
 
     def shapes_dict(self):
         pass
