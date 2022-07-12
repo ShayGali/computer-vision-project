@@ -10,7 +10,12 @@ import cv2
 @dataclass
 class DigitalImaging:
     def convert_to_gs(self, img_path: str):
-        pass
+        """
+        Gets path for image, converts image to grey scale using PIL,
+        prints new image mode & returns grey scale Image Object
+        :param img_path:
+        :return: grey scale Image Object
+        """
 
     def color_at(self, img: np.ndarray, row_num: int, col_num: int):
         pass
