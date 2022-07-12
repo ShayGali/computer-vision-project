@@ -18,15 +18,14 @@ d = DigitalImaging()
 
 
 # Test for make_collage function
-# images = [
-#     Image.open(f'{dog_folder_path}bulldog.jpg'), Image.open(f'{dog_folder_path}cocker-spaniel.jpg'),
-#     Image.open(f'{dog_folder_path}continental-bulldog.jpg'), Image.open(f'{dog_folder_path}corgi.jpg'),
-#     Image.open(f'{dog_folder_path}dog.jpg'), Image.open(f'{dog_folder_path}dog.jpg'),
-#     Image.open(f'{dog_folder_path}dog3.jpg'),Image.open(f'{dog_folder_path}dog4.jpg'),
-#     Image.open(f'{dog_folder_path}maltese.jpg'), Image.open(f'{dog_folder_path}puppy.jpg'),
-#     Image.open(f'{dog_folder_path}puppy2.jpg'), Image.open(f'{dog_folder_path}puppy3.jpg'),
-#
-# ]
+images = [
+    Image.open(f'{dog_folder_path}bulldog.jpg'), Image.open(f'{dog_folder_path}cocker-spaniel.jpg'),
+    Image.open(f'{dog_folder_path}continental-bulldog.jpg'), Image.open(f'{dog_folder_path}corgi.jpg'),
+    Image.open(f'{dog_folder_path}dog.jpg'), Image.open(f'{dog_folder_path}dog.jpg'),
+    Image.open(f'{dog_folder_path}dog3.jpg'),Image.open(f'{dog_folder_path}dog4.jpg'),
+    Image.open(f'{dog_folder_path}maltese.jpg'), Image.open(f'{dog_folder_path}puppy.jpg'),
+    Image.open(f'{dog_folder_path}puppy2.jpg'), Image.open(f'{dog_folder_path}puppy3.jpg'),
+]
 # dogs_collage = d.make_collage(images)
 # Image.fromarray(dogs_collage, 'RGB').show()
 
@@ -44,3 +43,4 @@ d = DigitalImaging()
 # img_converted_gs = d.convert_to_gs(f'{dog_folder_path}puppy3.jpg')
 # img_converted_gs.show()
 
+d.shapes_dict(images)
