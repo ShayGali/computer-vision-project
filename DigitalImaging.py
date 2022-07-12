@@ -116,6 +116,7 @@ class DigitalImaging:
             cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2GRAY)  # make a copy of the image in gray scale (for better performance)
 
         img_faces = classifiers.detectMultiScale(img_in_gray)  # detect the object
+        print(img_faces)
 
         # paint the rectangle around the objects that detected
         for (row, column, width, height) in img_faces:
@@ -143,10 +144,9 @@ class DigitalImaging:
         """
         classifiers = []
         if detect_eyes:
-            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
-        if detect_faces:
             classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml"))
-
+        if detect_faces:
+            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
 
     def detect_face_in_vid(self, video_path: str):
         pass
