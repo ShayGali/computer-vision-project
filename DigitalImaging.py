@@ -106,16 +106,16 @@ class DigitalImaging:
 
         # select the classifiers according to the detect_location
         if detect_location == "face":
-            classifiers = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+            classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
         elif detect_location == "eyes":
-            classifiers = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
+            classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
 
         img_as_arr = cv2.imread(img_path)  # read the img
 
         img_in_gray = \
             cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2GRAY)  # make a copy of the image in gray scale (for better performance)
 
-        img_faces = classifiers.detectMultiScale(img_in_gray)  # detect the object
+        img_faces = classifier.detectMultiScale(img_in_gray)  # detect the object
 
         # paint the rectangle around the objects that detected
         for (row, column, width, height) in img_faces:
