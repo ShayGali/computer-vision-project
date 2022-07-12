@@ -130,17 +130,22 @@ class DigitalImaging:
 
         return img_as_arr
 
-    def detect_obj_adv(self, img_path: str, eyes_bool: bool, faces_bool: bool):
+    def detect_obj_adv(self, img_path: str, detect_eyes: bool, detect_faces: bool):
         """
         A factory method for "detect_obj" function.
         By using the eyes & faces booleans
         the method will know which kind of objects it's looking for
 
         :param img_path: path to image location
-        :param eyes_bool: boolean for searching eyes
-        :param faces_bool: boolean for searching faces
+        :param detect_eyes: boolean for searching eyes
+        :param detect_faces: boolean for searching faces
         :return: Image object with green rectangle surrounding the findings
         """
+        classifiers = []
+        if detect_eyes:
+            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
+        if detect_faces:
+            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml"))
 
 
     def detect_face_in_vid(self, video_path: str):
