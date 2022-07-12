@@ -30,7 +30,7 @@ d = DigitalImaging()
 # dogs_collage = d.make_collage(images)
 # Image.fromarray(dogs_collage, 'RGB').show()
 
-# Test fordetect_obj function
+# Test for detect_obj function
 # img_arr_eyes = d.detect_obj('assets/peoples/people3.jpg', "eyes")
 # img_arr_faces = d.detect_obj('assets/peoples/people3.jpg', "face")
 # DigitalImaging.show_cv2_img(img_arr_eyes, "eyes detect")
