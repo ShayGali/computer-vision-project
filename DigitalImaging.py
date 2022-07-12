@@ -14,7 +14,7 @@ class DigitalImaging:
         Gets path for image, converts image to grey scale using PIL,
         prints new image mode & returns grey scale Image Object
         :param img_path:
-        :return: grey scale Image Object
+        :return: img_as_gs
         """
         img = Image.open(img_path)
         img_as_gs = img.convert('L')
