@@ -31,10 +31,10 @@ d = DigitalImaging()
 # Image.fromarray(dogs_collage, 'RGB').show()
 
 # Test for detect_obj function
-img_arr_eyes = d.detect_obj('assets/peoples/people3.jpg', "eyes")
-img_arr_faces = d.detect_obj('assets/peoples/people3.jpg', "face")
-DigitalImaging.show_cv2_img(img_arr_eyes, "eyes detect")
-DigitalImaging.show_cv2_img(img_arr_faces, "face detect")
+# img_arr_eyes = d.detect_obj('assets/peoples/people3.jpg', "eyes")
+# img_arr_faces = d.detect_obj('assets/peoples/people3.jpg', "face")
+# DigitalImaging.show_cv2_img(img_arr_eyes, "eyes detect")
+# DigitalImaging.show_cv2_img(img_arr_faces, "face detect")
 
 # Test for convert_to_gs function
 # img_converted_gs = d.convert_to_gs(f'{dog_folder_path}puppy3.jpg')

@@ -14,7 +14,7 @@ class DigitalImaging:
         Converts image to grey scale image using PIL,
         prints new image mode & returns grey scale Image Object
 
-        :param img_path: string containing the image path location
+        :param img_path: path to image location
         :return: img_as_gs: image object of given img_path converted to grey scale
         """
         img = Image.open(img_path)
@@ -29,7 +29,7 @@ class DigitalImaging:
         """
         Gets a path for an image & selected RGB color, and return new image only in the selected channel
 
-        :param path: path to image
+        :param path: path to image location
         :param RGB_char: can be - R, G, B
         :return: new Image object
         """
@@ -86,9 +86,9 @@ class DigitalImaging:
         Searches a given image for eyes/faces & returns an Image object
         with all findings surrounded by a green rectangle border.
 
-        :param img_path: path to the image
+        :param img_path: path to the image location
         :param detect_location: Which part to detect. can be "face" or "eyes"
-        :return: Image object with green rectangle surrounding the findings with green rectangle border
+        :return: Image object with green rectangle surrounding the findings
         """
         # the valid detect locations
         valid_detect_locations = ("face", "eyes",)
@@ -130,8 +130,18 @@ class DigitalImaging:
 
         return img
 
-    def detect_obj_adv(self, detect_eyes, detect_faces):
-        pass
+    def detect_obj_adv(self, img_path: str, eyes_bool: bool, faces_bool: bool):
+        """
+        A factory method for "detect_obj" function.
+        By using the eyes & faces booleans
+        the method will know which kind of objects it's looking for
+
+        :param img_path: path to image location
+        :param eyes_bool: boolean for searching eyes
+        :param faces_bool: boolean for searching faces
+        :return: Image object with green rectangle surrounding the findings
+        """
+
 
     def detect_face_in_vid(self, video_path: str):
         pass
