@@ -85,7 +85,16 @@ class DigitalImaging:
         # stack the np.arrays to one np.array vertically
         return np.vstack(new_images)
 
-    def shapes_dict(self):
+    def shapes_dict(self, img_list: List[Image.Image]) -> dict:
+
+        shape_list = [] # list of shape tuple
+
+        for img in img_list: # loop over the image list
+            img_as_arr = np.asarray(img) # convert to array
+            img_shape = img_as_arr.shape # get the shape of the image
+            shape_list.append(img_shape) # add the shape to the list
+
+        print(shape_list)
         pass
 
     def detect_obj(self, img_path: str, detect_location: Literal["eyes", "face"]) -> np.ndarray:
