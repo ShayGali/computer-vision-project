@@ -18,6 +18,7 @@ class DigitalImaging:
         :return: img_as_gs: image object of given img_path converted to grey scale
         """
         img = Image.open(img_path)
+        print(img)
         img_as_gs = img.convert('L')
         print('Image mode - \'', img_as_gs.mode, '\'')
         return img_as_gs
@@ -103,7 +104,7 @@ class DigitalImaging:
         # check the type of the img_path
         if not isinstance(img_path, str):
             raise TypeError(
-                f"img_path need to be of type str, ypu pass {type(img_path)}")
+                f"img_path need to be of type str, you passed {type(img_path)}")
 
         # convert the detect_location to lower case
         detect_location = detect_location.lower()
@@ -111,7 +112,7 @@ class DigitalImaging:
         # check if the detect_location is in the valid_detect_locations
         if detect_location not in valid_detect_locations:
             raise ValueError(
-                f"detect_location can be ({valid_detect_locations}), you pass {detect_location}")
+                f"detect_location can be ({valid_detect_locations}), you passed {detect_location}")
 
         # select the classifiers according to the detect_location
         if detect_location == "face":
@@ -146,22 +147,50 @@ class DigitalImaging:
 
     def detect_obj_adv(self, img_path: str, detect_eyes: bool, detect_faces: bool):
         """
-        A factory method for "detect_obj" function.
-        By using the eyes & faces booleans
-        the method will know which kind of objects it's looking for
+        Detects objects of faces and eyes & surrounds them with a green border triangle, depends on params which object
+        would be searched for.
+        Similar to "detect_obj" function.
 
         :param img_path: path to image location
         :param detect_eyes: boolean for searching eyes
         :param detect_faces: boolean for searching faces
         :return: Image object with green rectangle surrounding the findings
         """
+        # check the type of the img_path
+        if not isinstance(img_path, str):
+            raise TypeError(f"img_path need to be of type str, you passed {type(img_path)}")
+
         classifiers = []
+
         if detect_eyes:
-            classifiers.append(cv2.CascadeClassifier(
-                cv2.data.haarcascades + "haarcascade_eye.xml"))
+            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml"))
         if detect_faces:
-            classifiers.append(cv2.CascadeClassifier(
-                cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
+            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
+        if not detect_faces and not detect_eyes:
+            raise TypeError("Detect faces & eyes are both False. For the method to work one has to be True")
+
+        # read the img
+        img_as_arr = cv2.imread(img_path)
+
+        # make a copy of the image in gray scale (for better performance)
+        img_in_gray = cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2GRAY)
+
+        # Runs over the classifiers and paints green border rectangles over detected objects
+        for classifier in classifiers:
+            detect_objects = classifier.detectMultiScale(img_in_gray)
+            # paint the rectangle around the objects that detected
+            for (row, column, width, height) in detect_objects:
+                cv2.rectangle(img_as_arr,  # image
+                              (row, column),  # upper left corner of each face
+                              # lower right corner of each face
+                              (row + width, column + height),
+                              (0, 255, 0),  # paint the rectangle in green (BGR)
+                              2)
+
+            if len(detect_objects) == 0:  # If no objects were detected
+                print("No face/eye objects detected")
+
+        return img_as_arr
 
     def detect_face_in_vid(self, video_path: str):
         pass
