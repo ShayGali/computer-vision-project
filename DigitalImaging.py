@@ -35,20 +35,25 @@ class DigitalImaging:
         """
         valid_chars = ('R', 'G', 'B')
         if RGB_char not in valid_chars:
-            raise ValueError(f"RGB_char need to be ('R', 'G', 'B'), you pass {RGB_char}")
+            raise ValueError(
+                f"RGB_char need to be ('R', 'G', 'B'), you pass {RGB_char}")
 
         img_arr = np.array(Image.open(path))
 
         img_one_color_channel = img_arr.copy()
 
-        if RGB_char == 'R':  # will take all the pixels and in channels 1 and 2 (green and blue), put the value 0
+        # will take all the pixels and in channels 1 and 2 (green and blue), put the value 0
+        if RGB_char == 'R':
             img_one_color_channel[:, :, (1, 2)] = 0
-        elif RGB_char == 'G':  # will take all the pixels and in channels 0 and 2 (red and blue), put the value 0
+        # will take all the pixels and in channels 0 and 2 (red and blue), put the value 0
+        elif RGB_char == 'G':
             img_one_color_channel[:, :, (0, 2)] = 0
-        elif RGB_char == 'B':  # will take all the pixels and in channels 0 and 1 (red and green), put the value 0
+        # will take all the pixels and in channels 0 and 1 (red and green), put the value 0
+        elif RGB_char == 'B':
             img_one_color_channel[:, :, (0, 1)] = 0
 
-        return Image.fromarray(img_one_color_channel, 'RGB')  # convert the array to image
+        # convert the array to image
+        return Image.fromarray(img_one_color_channel, 'RGB')
 
     def make_collage(self, images_list: List[Image.Image]) -> np.ndarray:
         """
@@ -63,7 +68,8 @@ class DigitalImaging:
             raise ValueError("all images need to be of type PIL.Image")
 
         # convert the images from Image object to np.array
-        images_list_as_array = [np.array(img) for img in images_list]  # convert all images to ndarray
+        # convert all images to ndarray
+        images_list_as_array = [np.array(img) for img in images_list]
 
         new_images = []  # all the new array will be store here
 
@@ -76,7 +82,8 @@ class DigitalImaging:
                 img[:, :, (0, 1)] = 0  # covert to blue channel
             new_images.append(img)
 
-        return np.vstack(new_images)  # stack the np.arrays to one np.array vertically
+        # stack the np.arrays to one np.array vertically
+        return np.vstack(new_images)
 
     def shapes_dict(self):
         pass
@@ -95,33 +102,40 @@ class DigitalImaging:
 
         # check the type of the img_path
         if not isinstance(img_path, str):
-            raise TypeError(f"img_path need to be of type str, ypu pass {type(img_path)}")
+            raise TypeError(
+                f"img_path need to be of type str, ypu pass {type(img_path)}")
 
         # convert the detect_location to lower case
         detect_location = detect_location.lower()
 
         # check if the detect_location is in the valid_detect_locations
         if detect_location not in valid_detect_locations:
-            raise ValueError(f"detect_location can be ({valid_detect_locations}), you pass {detect_location}")
+            raise ValueError(
+                f"detect_location can be ({valid_detect_locations}), you pass {detect_location}")
 
         # select the classifiers according to the detect_location
         if detect_location == "face":
-            classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+            classifier = cv2.CascadeClassifier(
+                cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
         elif detect_location == "eyes":
-            classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
+            classifier = cv2.CascadeClassifier(
+                cv2.data.haarcascades + "haarcascade_eye.xml")
 
         img_as_arr = cv2.imread(img_path)  # read the img
 
         img_in_gray = \
-            cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2GRAY)  # make a copy of the image in gray scale (for better performance)
+            cv2.cvtColor(
+                img_as_arr, cv2.COLOR_BGR2GRAY)  # make a copy of the image in gray scale (for better performance)
 
-        img_faces = classifier.detectMultiScale(img_in_gray)  # detect the object
+        img_faces = classifier.detectMultiScale(
+            img_in_gray)  # detect the object
 
         # paint the rectangle around the objects that detected
         for (row, column, width, height) in img_faces:
             cv2.rectangle(img_as_arr,  # image
                           (row, column),  # upper left corner of each face
-                          (row + width, column + height),  # lower right corner of each face
+                          # lower right corner of each face
+                          (row + width, column + height),
                           (0, 255, 0),  # paint the rectangle in green (BGR)
                           2)
 
@@ -143,10 +157,11 @@ class DigitalImaging:
         """
         classifiers = []
         if detect_eyes:
-            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
+            classifiers.append(cv2.CascadeClassifier(
+                cv2.data.haarcascades + "haarcascade_eye.xml"))
         if detect_faces:
-            classifiers.append(cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml"))
-
+            classifiers.append(cv2.CascadeClassifier(
+                cv2.data.haarcascades + "haarcascade_frontalface_default.xml"))
 
     def detect_face_in_vid(self, video_path: str):
         pass
@@ -161,6 +176,7 @@ class DigitalImaging:
             if key_pressed:  # no matter what we press, this will behave as ESC
                 break
         try:
-            cv2.destroyWindow('image')  # also possible: cv2.destroyAllWindows()
+            # also possible: cv2.destroyAllWindows()
+            cv2.destroyWindow('image')
         except cv2.error:
             pass
