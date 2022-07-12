@@ -27,7 +27,7 @@ class DigitalImaging:
 
     def reduce_to(self, path: str, RGB_char: str) -> Image.Image:
         """
-        Gets a path for an image, and selected RGB color, and return new image only in the selected channel
+        Gets a path for an image & selected RGB color, and return new image only in the selected channel
 
         :param path: path to image
         :param RGB_char: can be - R, G, B
