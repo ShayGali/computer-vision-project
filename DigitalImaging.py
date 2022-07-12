@@ -11,10 +11,11 @@ import cv2
 class DigitalImaging:
     def convert_to_gs(self, img_path: str):
         """
-        Gets path for image, converts image to grey scale using PIL,
+        Converts image to grey scale image using PIL,
         prints new image mode & returns grey scale Image Object
-        :param img_path:
-        :return: img_as_gs
+
+        :param img_path: string containing the image path location
+        :return: img_as_gs: image object of given img_path converted to grey scale
         """
         img = Image.open(img_path)
         img_as_gs = img.convert('L')
@@ -26,7 +27,8 @@ class DigitalImaging:
 
     def reduce_to(self, path: str, RGB_char: str) -> Image.Image:
         """
-        get path for an image, and selected RGB color, and return new image only in the selected channel
+        Gets a path for an image, and selected RGB color, and return new image only in the selected channel
+
         :param path: path to image
         :param RGB_char: can be - R, G, B
         :return: new Image object
@@ -50,8 +52,9 @@ class DigitalImaging:
 
     def make_collage(self, images_list: List[Image.Image]) -> np.ndarray:
         """
-        get list of images object and merge them to one collage.
+        Gets list of images object and merge them to one collage.
         the collage will be -> 3 red channel images, 3 green channel images, 3 blue channel images and so on
+
         :param images_list: list on image object (from PIL.Image package)
         :return: np.array that represent the collage
         """
@@ -80,11 +83,12 @@ class DigitalImaging:
 
     def detect_obj(self, img_path: str, detect_location: Literal["eyes", "face"]) -> np.ndarray:
         """
-        detect object in image.
+        Searches a given image for eyes/faces & returns an Image object
+        with all findings surrounded by a green rectangle border.
 
         :param img_path: path to the image
         :param detect_location: Which part to detect. can be "face" or "eyes"
-        :return: the image with green rectangle around the detected objects
+        :return: Image object with green rectangle surrounding the findings with green rectangle border
         """
         # the valid detect locations
         valid_detect_locations = ("face", "eyes",)
@@ -93,7 +97,7 @@ class DigitalImaging:
         if not isinstance(img_path, str):
             raise TypeError(f"img_path need to be of type str, ypu pass {type(img_path)}")
 
-        # convert the detect_location to lover case
+        # convert the detect_location to lower case
         detect_location = detect_location.lower()
 
         # check if the detect_location is in the valid_detect_locations
