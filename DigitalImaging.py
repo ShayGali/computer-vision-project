@@ -16,6 +16,10 @@ class DigitalImaging:
         :param img_path:
         :return: grey scale Image Object
         """
+        img = Image.open(img_path)
+        img_as_gs = img.convert('L')
+        print('Image mode - \'', img_as_gs.mode, '\'')
+        return img_as_gs
 
     def color_at(self, img: np.ndarray, row_num: int, col_num: int):
         pass

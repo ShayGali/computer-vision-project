@@ -35,3 +35,8 @@ d = DigitalImaging()
 # img_arr_faces = d.detect_obj('assets/peoples/people3.jpg', "face")
 # DigitalImaging.show_cv2_img(img_arr_eyes, "eyes detect")
 # DigitalImaging.show_cv2_img(img_arr_faces, "face detect")
+
+# Test for convert_to_gs function
+# img_converted_gs = d.convert_to_gs(f'{dog_folder_path}puppy3.jpg')
+# img_converted_gs.show()
+
