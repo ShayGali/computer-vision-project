@@ -18,7 +18,6 @@ class DigitalImaging:
         :return: img_as_gs: image object of given img_path converted to grey scale
         """
         img = Image.open(img_path)
-        print(img)
         img_as_gs = img.convert('L')
         print('Image mode - \'', img_as_gs.mode, '\'')
         return img_as_gs
