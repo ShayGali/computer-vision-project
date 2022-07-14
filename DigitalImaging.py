@@ -23,7 +23,25 @@ class DigitalImaging:
         return img_as_gs
 
     def color_at(self, img: np.ndarray, row_num: int, col_num: int):
-        pass
+        """
+        This method gets an image as numpy array,
+        also gets a row number and a column number, which represent a specific pixel in the image.
+        Checks if the image is writeable -
+        if true, the method returns a tuple of the RGB value of the pixel that
+        been given, by the row number and column number.
+        else, the method returns None.
+
+        :param img: image as numpy array
+        :param row_num: pixel row number
+        :param col_num: pixel column number
+        :return: tuple with the color of the pixel in rgb format
+        """
+        if img.flags.writeable:
+            a_img = Image.fromarray(img, 'RGB')
+            RGB = a_img.getpixel((row_num,col_num))
+            a_tuple = tuple(RGB)
+            return (a_tuple)
+        return None
 
     def reduce_to(self, path: str, RGB_char: str) -> Image.Image:
         """
@@ -200,8 +218,29 @@ class DigitalImaging:
 
         return img_as_arr
 
-    def detect_face_in_vid(self, video_path: str):
-        pass
+    def detect_face_in_vid(self, video_path: str) -> None:
+        """
+        This method gets a path of a video clip, as a string and detects all the faces in that video.
+        :param video_path: a path of a video clip as a string
+        :return: none
+        """
+        # check the type of the video_path
+        if not isinstance(video_path, str):
+            raise TypeError(f"video_path need to be of type str, you passed {type(video_path)}")
+        vid = cv2.VideoCapture(video_path)
+        classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        while(vid.isOpened()):
+            ret, frame = vid.read()
+            frame_in_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = classifier.detectMultiScale(frame_in_gray)
+            for (row, col, w, h) in faces:
+                cv2.rectangle(frame,(row, col), (row + w, col + h), (0, 255, 0), 2)
+            frame = cv2.resize(frame,(650,350))
+            cv2.imshow('video', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        vid.release()
+        cv2.destroyAllWindows()
 
     @staticmethod
     def show_cv2_img(cv2_img_arr: np.ndarray, window_name='image'):
