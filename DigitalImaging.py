@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import dataclasses as dc
-from typing import List, Literal
+from typing import List, Literal, Tuple
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as pyplot
@@ -9,7 +9,7 @@ import cv2
 
 @dataclass
 class DigitalImaging:
-    def convert_to_gs(self, img_path: str):
+    def convert_to_gs(self, img_path: str) -> Image.Image:
         """
         Converts image to grey scale image using PIL,
         prints new image mode & returns grey scale Image Object
@@ -22,7 +22,7 @@ class DigitalImaging:
         print('Image mode - \'', img_as_gs.mode, '\'')
         return img_as_gs
 
-    def color_at(self, img: np.ndarray, row_num: int, col_num: int):
+    def color_at(self, img: np.ndarray, row_num: int, col_num: int) -> Tuple[int, int, int] | None:
         """
         This method gets an image as numpy array,
         also gets a row number and a column number, which represent a specific pixel in the image.
@@ -38,7 +38,7 @@ class DigitalImaging:
         """
         if img.flags.writeable:
             a_img = Image.fromarray(img, 'RGB')
-            RGB = a_img.getpixel((row_num,col_num))
+            RGB = a_img.getpixel((row_num, col_num))
             a_tuple = tuple(RGB)
             return (a_tuple)
         return None
@@ -103,14 +103,15 @@ class DigitalImaging:
         # stack the np.arrays to one np.array vertically
         return np.vstack(new_images)
 
+    # TODO: לשאול את נתן מה הוא רוצה במילון
     def shapes_dict(self, img_list: List[Image.Image]) -> dict:
 
-        shape_list = [] # list of shape tuple
+        shape_list = []  # list of shape tuple
 
-        for img in img_list: # loop over the image list
-            img_as_arr = np.asarray(img) # convert to array
-            img_shape = img_as_arr.shape # get the shape of the image
-            shape_list.append(img_shape) # add the shape to the list
+        for img in img_list:  # loop over the image list
+            img_as_arr = np.asarray(img)  # convert to array
+            img_shape = img_as_arr.shape  # get the shape of the image
+            shape_list.append(img_shape)  # add the shape to the list
 
         print(shape_list)
         pass
@@ -171,7 +172,7 @@ class DigitalImaging:
 
         return img_as_arr
 
-    def detect_obj_adv(self, img_path: str, detect_eyes: bool, detect_faces: bool):
+    def detect_obj_adv(self, img_path: str, detect_eyes: bool, detect_faces: bool) -> np.ndarray:
         """
         Detects objects of faces and eyes & surrounds them with a green border triangle, depends on params which object
         would be searched for.
@@ -229,13 +230,13 @@ class DigitalImaging:
             raise TypeError(f"video_path need to be of type str, you passed {type(video_path)}")
         vid = cv2.VideoCapture(video_path)
         classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-        while(vid.isOpened()):
+        while (vid.isOpened()):
             ret, frame = vid.read()
             frame_in_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = classifier.detectMultiScale(frame_in_gray)
             for (row, col, w, h) in faces:
-                cv2.rectangle(frame,(row, col), (row + w, col + h), (0, 255, 0), 2)
-            frame = cv2.resize(frame,(650,350))
+                cv2.rectangle(frame, (row, col), (row + w, col + h), (0, 255, 0), 2)
+            frame = cv2.resize(frame, (650, 350))
             cv2.imshow('video', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
