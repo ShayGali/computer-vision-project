@@ -2,6 +2,7 @@ from DigitalImaging import DigitalImaging
 
 from PIL import Image
 import numpy as np
+
 # import matplotlib.pyplot as pyplot
 # import cv2
 

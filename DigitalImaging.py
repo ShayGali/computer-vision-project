@@ -4,7 +4,6 @@ import dataclasses as dc
 from typing import List, Literal, Tuple
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as pyplot
 import cv2
 
 
