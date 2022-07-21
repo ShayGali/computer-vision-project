@@ -1,3 +1,4 @@
+import glob
 from dataclasses import dataclass
 import dataclasses as dc
 from typing import List, Literal, Tuple
@@ -103,18 +104,20 @@ class DigitalImaging:
         # stack the np.arrays to one np.array vertically
         return np.vstack(new_images)
 
-    # TODO: לשאול את נתן מה הוא רוצה במילון
     def shapes_dict(self, img_list: List[Image.Image]) -> dict:
-
-        shape_list = []  # list of shape tuple
+        # each item will look like -> filename : shape(height,width,num_of_channels)
+        shape_dict = {}  # dict of filename to shape tuple
 
         for img in img_list:  # loop over the image list
-            img_as_arr = np.asarray(img)  # convert to array
-            img_shape = img_as_arr.shape  # get the shape of the image
-            shape_list.append(img_shape)  # add the shape to the list
+            img_as_arr = np.asarray(img)
+            img_shape = img_as_arr.shape
+            img_filename = img.filename
+            shape_dict[img_filename] = img_shape
 
-        print(shape_list)
-        pass
+        # return the dict sorted by the img height
+        # item[1] - the image dimensions (shape)
+        # item[1][0] - the height of the img
+        return {key: value for key, value in sorted(shape_dict.items(), key=lambda item: item[1][0])}
 
     def detect_obj(self, img_path: str, detect_location: Literal["eyes", "face"]) -> np.ndarray:
         """
@@ -257,3 +260,7 @@ class DigitalImaging:
             cv2.destroyWindow('image')
         except cv2.error:
             pass
+
+    @staticmethod
+    def list_of_all_img_in_folder(file_path: str) -> List[Image.Image]:
+        return [Image.open(f) for f in glob.iglob(file_path + "/*")]
