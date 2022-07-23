@@ -152,7 +152,6 @@ class DigitalImaging:
                 cv2.data.haarcascades + "haarcascade_eye.xml")
 
         img_as_arr = cv2.imread(img_path)  # read the img
-
         img_in_gray = \
             cv2.cvtColor(
                 img_as_arr, cv2.COLOR_BGR2GRAY)  # make a copy of the image in gray scale (for better performance)
@@ -172,7 +171,7 @@ class DigitalImaging:
         if len(img_faces) == 0:  # if we don't find anything
             print(f"{detect_location} not detected")
 
-        return img_as_arr
+        return cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2RGB)
 
     def detect_obj_adv(self, img_path: str, detect_eyes: bool, detect_faces: bool) -> np.ndarray:
         """
@@ -219,46 +218,34 @@ class DigitalImaging:
             if len(detect_objects) == 0:  # If no objects were detected
                 print("No face/eye objects detected")
 
-        return img_as_arr
+        return cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2RGB)
 
     def detect_face_in_vid(self, video_path: str) -> None:
         """
         This method gets a path of a video clip, as a string and detects all the faces in that video.
         :param video_path: a path of a video clip as a string
-        :return: none
+        :return: None
         """
         # check the type of the video_path
         if not isinstance(video_path, str):
             raise TypeError(f"video_path need to be of type str, you passed {type(video_path)}")
         vid = cv2.VideoCapture(video_path)
         classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-        while (vid.isOpened()):
+        while vid.isOpened():
             ret, frame = vid.read()
+            if not ret:
+                break
             frame_in_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = classifier.detectMultiScale(frame_in_gray)
             for (row, col, w, h) in faces:
                 cv2.rectangle(frame, (row, col), (row + w, col + h), (0, 255, 0), 2)
             frame = cv2.resize(frame, (650, 350))
             cv2.imshow('video', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if cv2.waitKey(1) == 27:
                 break
+
         vid.release()
         cv2.destroyAllWindows()
-
-    @staticmethod
-    def show_cv2_img(cv2_img_arr: np.ndarray, window_name='image'):
-        while True:
-            if cv2_img_arr is None:
-                break
-            cv2.imshow(window_name, cv2_img_arr)
-            key_pressed = cv2.waitKey(0)  # define a handler for key press
-            if key_pressed:  # no matter what we press, this will behave as ESC
-                break
-        try:
-            # also possible: cv2.destroyAllWindows()
-            cv2.destroyWindow('image')
-        except cv2.error:
-            pass
 
     @staticmethod
     def list_of_all_img_in_folder(file_path: str) -> List[Image.Image]:
