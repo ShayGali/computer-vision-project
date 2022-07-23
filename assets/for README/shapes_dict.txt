@@ -1,6 +1,0 @@
-('assets/different image height\\migratory-birds-640.jpg', (427, 640, 3))
-('assets/different image height\\butterfly-1280.jpg', (1280, 1920, 3))
-('assets/different image height\\penguin-1280.png', (1280, 1075, 4))
-('assets/different image height\\shutters-1357.jpg', (1357, 1920, 3))
-('assets/different image height\\animal-1920.jpg', (1920, 1464, 3))
-('assets/different image height\\cat-1920.jpg', (1920, 1837, 3))
