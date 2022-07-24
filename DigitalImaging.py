@@ -19,7 +19,7 @@ class DigitalImaging:
         """
         img = Image.open(img_path)
         img_as_gs = img.convert('L')
-        print('Image mode - \'', img_as_gs.mode, '\'')
+        print(f"Image mode before convert - '{img.mode}'")
         return img_as_gs
 
     def color_at(self, img: np.ndarray, row_num: int, col_num: int) -> Tuple[int, int, int] | None:
@@ -216,7 +216,7 @@ class DigitalImaging:
                               2)
 
             if len(detect_objects) == 0:  # If no objects were detected
-                print("No face/eye objects detected")
+                print("No face/eyes objects detected")
 
         return cv2.cvtColor(img_as_arr, cv2.COLOR_BGR2RGB)
 
@@ -249,4 +249,10 @@ class DigitalImaging:
 
     @staticmethod
     def list_of_all_img_in_folder(file_path: str) -> List[Image.Image]:
+        """
+        get a path to folder and return a list on PIL.Image Object.
+        all the file need to be a image file
+        :param file_path: path to foldr
+        :return: list of PIL.Image
+        """
         return [Image.open(f) for f in glob.iglob(file_path + "/*")]
