@@ -46,14 +46,14 @@ for i in d.shapes_dict(images).items():
 
 
 # Test for detect_obj function
-img_arr_eyes = d.detect_obj('assets/peoples/people3.jpg', "eyes")
-img_arr_faces = d.detect_obj('assets/peoples/people3.jpg', "face")
+img_arr_eyes = d.detect_obj('assets/people/people3.jpg', "eyes")
+img_arr_faces = d.detect_obj('assets/people/people3.jpg', "face")
 Image.fromarray(img_arr_eyes).show()
 Image.fromarray(img_arr_faces).show()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Test for detect_obj_adv function
-img_arr = d.detect_obj_adv('assets/peoples/people3.jpg', True, False)
+img_arr = d.detect_obj_adv('assets/people/people3.jpg', True, False)
 Image.fromarray(img_arr).show()
 
 # Test for detect_face_in_vid function
-d.detect_face_in_vid("assets/peoples/vid.mp4")
+d.detect_face_in_vid("assets/people/vid.mp4")
