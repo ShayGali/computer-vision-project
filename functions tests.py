@@ -1,9 +1,12 @@
-from DigitalImaging import DigitalImaging
-
 from PIL import Image
 import numpy as np
 
+from DigitalImaging import DigitalImaging
+
 d = DigitalImaging()
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 # Test for convert_to_gs function
 img_converted_gs = d.convert_to_gs('assets/dogs/puppy3.jpg')
@@ -37,6 +40,8 @@ images = DigitalImaging.list_of_all_img_in_folder("assets/dogs")
 dogs_collage = d.make_collage(images)
 Image.fromarray(dogs_collage, 'RGB').show()
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 # Test for shapes_dict function
 images = DigitalImaging.list_of_all_img_in_folder("assets/different image height")
 for i in d.shapes_dict(images).items():
@@ -50,10 +55,18 @@ img_arr_eyes = d.detect_obj('assets/people/people3.jpg', "eyes")
 img_arr_faces = d.detect_obj('assets/people/people3.jpg', "face")
 Image.fromarray(img_arr_eyes).show()
 Image.fromarray(img_arr_faces).show()
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 # Test for detect_obj_adv function
 img_arr = d.detect_obj_adv('assets/people/people3.jpg', True, False)
 Image.fromarray(img_arr).show()
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 # Test for detect_face_in_vid function
 d.detect_face_in_vid("assets/people/vid.mp4")
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
