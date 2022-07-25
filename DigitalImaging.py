@@ -85,6 +85,12 @@ class DigitalImaging:
         if any([not isinstance(img, Image.Image) for img in images_list]):
             raise ValueError("all images need to be of type PIL.Image")
 
+        # resize the images to be the same size
+        # the resize will be to the max width and the max height of the images
+        max_width_img = max(images_list, key=lambda img: img.width).width
+        max_height_img = max(images_list, key=lambda img: img.height).height
+        images_list = [image.resize((max_width_img, max_height_img)) for image in images_list]
+
         # convert the images from Image object to np.array
         # convert all images to ndarray
         images_list_as_array = [np.array(img) for img in images_list]
@@ -255,4 +261,4 @@ class DigitalImaging:
         :param file_path: path to foldr
         :return: list of PIL.Image
         """
-        return [Image.open(f) for f in glob.iglob(file_path + "/*")]
+        return [Image.open(f) for f in glob.iglob(file_path + "/*.jpg")]
