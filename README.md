@@ -1,7 +1,7 @@
 # computer-vision-project
 computer vision course final project
 
-[Linke to jupyter notebook](https://github.com/ShayGali/computer-vision-project/blob/master/Notebook.ipynb)
+[Link to jupyter notebook](https://github.com/ShayGali/computer-vision-project/blob/master/Notebook.ipynb)
 
 ![jupyter notebook](https://img.shields.io/badge/Made%20with-Jupyter-orange?style=for-the-badge&logo=Jupyter)
 
