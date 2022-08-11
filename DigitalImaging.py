@@ -1,13 +1,10 @@
 import glob
-from dataclasses import dataclass
-import dataclasses as dc
 from typing import List, Literal, Tuple
 import numpy as np
 from PIL import Image
 import cv2
 
 
-@dataclass
 class DigitalImaging:
     def convert_to_gs(self, img_path: str) -> Image.Image:
         """
