@@ -1,4 +1,5 @@
 import glob
+import os
 from typing import List, Literal, Tuple
 import numpy as np
 from PIL import Image
@@ -113,7 +114,7 @@ class DigitalImaging:
         for img in img_list:  # loop over the image list
             img_as_arr = np.asarray(img)
             img_shape = img_as_arr.shape
-            img_filename = img.filename
+            img_filename = os.path.basename(img.filename)
             shape_dict[img_filename] = img_shape
 
         # return the dict sorted by the img height
