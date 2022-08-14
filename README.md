@@ -3,7 +3,7 @@ computer vision course final project
 
 [Link to jupyter notebook](https://github.com/ShayGali/computer-vision-project/blob/master/Notebook.ipynb)
 
-![Link to working-methods Video](https://github.com/ShayGali/computer-vision-project/blob/master/ActPres-ComVisn-Proj.mp4)
+[Link to working-methods Video](https://github.com/ShayGali/computer-vision-project/blob/master/ActPres-ComVisn-Proj.mp4)
 
 ![jupyter notebook](https://img.shields.io/badge/Made%20with-Jupyter-orange?style=for-the-badge&logo=Jupyter)
 
